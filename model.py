@@ -1,31 +1,43 @@
+import pyedflib
+import csv
 import pandas as pd
 import numpy as np
 import os
 
-def dat_to_csv(dat_file_path, num_channels, csv_file_path):
+    
+def export_psg_to_csv(edf_file_path, csv_file_path):
+    
+    #Error handling For If edf file does not exist
+    if not os.path.exists(edf_file_path):
+        raise FileNotFoundError(f"The EDF file '{edf_file_path}' does not exist.")
 
-    if os.path.exists(csv_file_path):
-        print("CSV file exists")
-        return
+    edf_file = pyedflib.EdfReader(edf_file_path)
 
-    #Read file and load into np array
-    data = np.fromfile(dat_file_path, dtype=np.float32)
+    # Get the indices and labels of the selected channels
+    channel_labels = edf_file.getSignalLabels()
+    channel_indices = [edf_file.getSignalLabels().index(name) for name in channel_labels]
 
-    # Reshape data to a 2D array with correct  num of channels
-    num_channels = 4
-    num_samples = len(data) // num_channels
-    data_reshaped = data.reshape(num_samples, num_channels)
+    csv_data = []
 
-    #Save data as CSV
-    np.savetxt(csv_file_path, data_reshaped, delimiter=",", fmt="%.6f")
-    print("CSV file created")
+    # Iterate through the signals and store the data in a list of lists
+    for i in range(edf_file.getNSamples()[0]):
+        timestamp = edf_file.getSampleFrequency(channel_indices[0]) * i
+        row_data = [timestamp] + [edf_file.readSignal(idx)[i] for idx in channel_indices]
+        csv_data.append(row_data)
+
+    edf_file.close()
+
+    # Write the data to the CSV file
+    with open(csv_file_path, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(['Timestamp'] + channel_labels)  # Write header row
+        csvwriter.writerows(csv_data)  # Write data rows
+
+    print(f"PSG data has been exported to {csv_file_path}.")
 
 
+# DRIVER
+edf_file_path = 'data\DatabaseSubjects\subject1.edf'
+csv_file_path = 'data\CSV_Data\subject1_data.csv'
 
-#DRIVERS
-
-#test dat_to_csv
-test_dat_file_path = "data\mit-bih-polysomnographic-database-1.0.0\slp01a.dat"
-test_csv_file_path = "data\mit-BIH-csv\slp01a.csv"
-dat_to_csv(test_dat_file_path, 4, test_csv_file_path)
-
+export_psg_to_csv(edf_file_path, csv_file_path)
