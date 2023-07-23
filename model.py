@@ -4,14 +4,16 @@ import pandas as pd
 import os
 from tqdm import tqdm
 
-def export_psg_to_csv(edf_file_path, csv_file_path):
+def export_psg_to_csv(edf_file_path, csv_file_path, channel_labels=None):
+
     if not os.path.exists(edf_file_path):
         raise FileNotFoundError(f"The EDF file '{edf_file_path}' does not exist.")
 
     edf_file = pyedflib.EdfReader(edf_file_path)
 
     # Get the indices and labels of the selected channels
-    channel_labels = edf_file.getSignalLabels()
+    if channel_labels is None:
+        channel_labels = edf_file.getSignalLabels()
     channel_indices = [edf_file.getSignalLabels().index(name) for name in channel_labels]
 
     # Create an empty DataFrame
@@ -32,8 +34,8 @@ def export_psg_to_csv(edf_file_path, csv_file_path):
 
     print(f"PSG data has been exported to {csv_file_path}.")
 
-# Example usage:
-edf_file_path = 'data\DatabaseSubjects\subject1.edf'
-csv_file_path = 'data\CSV_Data\subject1_data.csv'
+# Driver Code
+edf_file_path = 'data\DatabaseSubjects\subject2.edf'
+csv_file_path = 'data\CSV_Data\subject2_data.csv'
 
 export_psg_to_csv(edf_file_path, csv_file_path)
