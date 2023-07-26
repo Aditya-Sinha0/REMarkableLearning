@@ -15,7 +15,7 @@ def export_psg_to_csv(edf_file_path, csv_file_path, channel_labels=None, overwri
     if not os.path.exists(edf_file_path):
         raise FileNotFoundError(f"The EDF file '{edf_file_path}' does not exist.")
 
-    # Open the EDF file using 'with' statement to automatically close it later
+    # Open the EDF file
     with pyedflib.EdfReader(edf_file_path) as edf_file:
 
         # Get the indices and labels of the selected channels
@@ -43,7 +43,7 @@ def export_psg_to_csv(edf_file_path, csv_file_path, channel_labels=None, overwri
     print(f"PSG data has been exported to {csv_file_path}.")
 
 # Driver Code
-edf_file_path = 'data\DatabaseSubjects\subject1.edf'
-csv_file_path = 'data\CSV_Data\subject1_data.csv'
+edf_file_path = 'data\DatabaseSubjects\subject2.edf'
+csv_file_path = 'data\CSV_Data\subject2_data.csv'
 
-export_psg_to_csv(edf_file_path, csv_file_path, samples_wanted=200)
+export_psg_to_csv(edf_file_path, csv_file_path, samples_wanted=1200)
