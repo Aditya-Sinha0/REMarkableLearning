@@ -55,21 +55,20 @@ The project has the following structure:
 
 sleep/
 |-- data/
-| |-- CSV_Data/
-| | |-- subject1_data_1200.csv
-| | |-- subject2_data_1200.csv
-| |-- DatabaseSubjects/
-| | |-- subject1.edf
-| | |-- subject2.edf
+|   |-- CSV_Data/
+|   |   |-- subject1_data_1200.csv
+|   |   |-- subject2_data_1200.csv
+|   |-- DatabaseSubjects/
+|   |   |-- subject1.edf
+|   |   |-- subject2.edf
 |-- scripts/
-| |-- psg_data_parser.py
-| |-- model.py
+|   |-- psg_data_parser.py
+|   |-- model.py
 |-- sleepenv/
-| |-- (virtual environment files, if used)
+|   |-- (virtual environment files, if used)
 |-- .gitignore
 |-- README.md
 |-- requirements.txt
-
 
 ## Data
 
@@ -114,10 +113,6 @@ Note: Ensure that you have the necessary EDF files (if using `psg_data_parser.py
 ## Contribution
 
 We welcome contributions to this project. If you find any issues, have suggestions, or want to add new features, feel free to open a pull request or submit an issue.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
 
 Please note that you should also create a requirements.txt file in the root directory of your project, containing the required dependencies (pandas, scikit-learn, pyedflib, tqdm). The requirements.txt file should look like this:
 
