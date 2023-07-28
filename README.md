@@ -54,21 +54,22 @@ Copy code
 The project has the following structure:
 
 sleep/
-|-- data/
-|   |-- CSV_Data/
-|   |   |-- subject1_data_1200.csv
-|   |   |-- subject2_data_1200.csv
-|   |-- DatabaseSubjects/
-|   |   |-- subject1.edf
-|   |   |-- subject2.edf
-|-- scripts/
-|   |-- psg_data_parser.py
-|   |-- model.py
-|-- sleepenv/
-|   |-- (virtual environment files, if used)
-|-- .gitignore
-|-- README.md
-|-- requirements.txt
+├── data/
+│   ├── CSV_Data/
+│   │   ├── subject1_data_1200.csv
+│   │   └── subject2_data_1200.csv
+│   └── DatabaseSubjects/
+│       ├── subject1.edf
+│       └── subject2.edf
+├── scripts/
+│   ├── psg_data_parser.py
+│   └── model.py
+├── sleepenv/
+│   └── (virtual environment files, if used)
+├── .gitignore
+├── README.md
+└── requirements.txt
+
 
 ## Data
 
