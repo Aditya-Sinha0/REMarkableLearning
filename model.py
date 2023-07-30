@@ -16,14 +16,14 @@ def load_data(data_path, x_column, y_column):
 
     return x, y
 
-def train_and_evaluate_model(X_train, X_test, Y_train, Y_test, model):
+def train_evaluate_model(X_train, X_test, Y_train, Y_test, model):
     model.fit(X_train, Y_train)
     y_pred = model.predict(X_test)
     mse = mean_squared_error(Y_test, y_pred)
     print(f"Mean Squared Error({model.__class__.__name__}): {mse}")
     return mse
 
-def test_all_models(data_path, x_column, y_column, models=None):
+def test_models(data_path, x_column, y_column, models=None):
     X, Y = load_data(data_path, x_column, y_column)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4)
 
@@ -46,7 +46,7 @@ def test_all_models(data_path, x_column, y_column, models=None):
 
     mse_vals = {}
     for model in models:
-        mse = train_and_evaluate_model(X_train, X_test, Y_train, Y_test, model)
+        mse = train_evaluate_model(X_train, X_test, Y_train, Y_test, model)
         mse_vals[model] = mse
 
     best_model = min(mse_vals, key=lambda k: mse_vals[k])
@@ -58,7 +58,7 @@ x_column = 'PULSE'
 y_column = 'ECG'
 
 # Test all models using the default model list
-test_all_models(data_path, x_column, y_column)
+test_models(data_path, x_column, y_column)
 
 # Alternatively, you can specify a list of specific models to test
 # models_to_test = [RandomForestRegressor(), LinearRegression(), SVR()]
